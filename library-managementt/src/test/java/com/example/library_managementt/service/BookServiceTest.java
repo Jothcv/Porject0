@@ -79,7 +79,14 @@ class BookServiceTest {
     @Test
     void deleteBook() {
         bookService.deleteBook(1L);
-
         verify(bookRepository, times(1)).deleteById(1L);
+    }
+    @Test
+    public void testGetBookByIdNotFound(){
+        when(bookRepository.findById(99L)).thenReturn(Optional.empty());
+
+        Optional<Book> foundBook=bookService.getBookById(99L);
+
+        assertFalse(foundBook.isPresent(),"no creo que el libro este presente se enfermo");
     }
 }
